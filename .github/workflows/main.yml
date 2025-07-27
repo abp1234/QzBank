@@ -1,4 +1,4 @@
-name: Gemini Code Review on Push
+name: Gemini Review on Push
 
 on:
   push:
@@ -13,10 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Read Dart diff
+      - name: Get Dart diff
         run: |
           echo '```diff' > code.txt
-          git fetch origin ${{ github.event.before }}
           git diff ${{ github.event.before }} ${{ github.sha }} -- '*.dart' >> code.txt
           echo '```' >> code.txt
 
@@ -25,7 +24,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PROMPT=$(cat code.txt | sed ':a;N;$!ba;s/\n/\\n/g')
-          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
+          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
             -H "Content-Type: application/json" \
             -H "x-goog-api-key: $GEMINI_API_KEY" \
             -d '{
@@ -43,4 +42,41 @@ jobs:
                   "thinkingBudget": 0
                 }
               }
-            }'
+            }')
+          echo "$RESPONSE" > response.json
+
+      - name: Extract Gemini Review Text
+        id: extract
+        run: |
+          TEXT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
+          echo "REVIEW_TEXT<<EOF" >> $GITHUB_OUTPUT
+          echo "$TEXT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Find Related PR
+        id: find_pr
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const commitSha = context.payload.after;
+            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: commitSha
+            });
+            if (prs.data.length === 0) {
+              core.setFailed("No PR found for this push.");
+            } else {
+              const prNumber = prs.data[0].number;
+              core.setOutput("pr_number", prNumber);
+            }
+
+      - name: Comment on Pull Request
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ steps.find_pr.outputs.pr_number }}
+          body: |
+            🤖 **Gemini 자동 코드 리뷰 결과 (Flutter 스타일 가이드 기준)**
+
+            ${{ steps.extract.outputs.REVIEW_TEXT }}
