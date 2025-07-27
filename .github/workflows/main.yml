@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Read Dart diff
-        id: read_code
         run: |
           echo '```diff' > code.txt
           git fetch origin ${{ github.event.before }}
@@ -26,7 +25,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PROMPT=$(cat code.txt | sed ':a;N;$!ba;s/\n/\\n/g')
-          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$GEMINI_API_KEY" \
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=$GEMINI_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
               "contents": [{
