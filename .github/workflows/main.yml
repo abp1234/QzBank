@@ -20,17 +20,27 @@ jobs:
           git diff ${{ github.event.before }} ${{ github.sha }} -- '*.dart' >> code.txt
           echo '```' >> code.txt
 
-      - name: Send to Gemini
+      - name: Send to Gemini 2.5 Flash
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PROMPT=$(cat code.txt | sed ':a;N;$!ba;s/\n/\\n/g')
-          curl -s -X POST "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=$GEMINI_API_KEY" \
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
             -H "Content-Type: application/json" \
+            -H "x-goog-api-key: $GEMINI_API_KEY" \
             -d '{
-              "contents": [{
-                "parts": [{
-                  "text": "다음 Dart 코드를 리뷰해줘. Flutter 스타일 가이드를 기준으로:\n'"$PROMPT"'"
-                }]
-              }]
+              "contents": [
+                {
+                  "parts": [
+                    {
+                      "text": "다음 Dart 코드를 리뷰해줘. Flutter 스타일 가이드를 기준으로:\n'"$PROMPT"'"
+                    }
+                  ]
+                }
+              ],
+              "generationConfig": {
+                "thinkingConfig": {
+                  "thinkingBudget": 0
+                }
+              }
             }'
