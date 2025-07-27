@@ -20,14 +20,14 @@ jobs:
         run: |
           git diff ${{ github.event.before }} ${{ github.sha }} > temp_diff.txt
           if [ -s temp_diff.txt ]; then
-            echo "has_diff=true" >> $GITHUB_OUTPUT
+            echo "has_diff=true" >> "$GITHUB_OUTPUT"
             echo '```diff' > code.txt
             cat temp_diff.txt >> code.txt
             echo '```' >> code.txt
             echo "🔍 [DEBUG] Generated code.txt contents:"
             cat code.txt
           else
-            echo "has_diff=false" >> $GITHUB_OUTPUT
+            echo "has_diff=false" >> "$GITHUB_OUTPUT"
             echo "🔍 [DEBUG] No .dart file changes detected."
           fi
 
@@ -37,35 +37,23 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PROMPT=$(cat code.txt | sed ':a;N;$!ba;s/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
-          JSON_PAYLOAD=$(cat <<EOF
-{
-  "contents": [
-    {
-      "parts": [
-        {
-          "text": "다음은 최근 커밋에서 변경된 코드입니다. 협업과 유지보수 관점, 그리고 선임 개발자의 시각에서 리뷰해 주세요. 개선점, 버그 가능성, 스타일 문제 등을 지적해 주세요.\\n\\n코드는 아래 diff 블록에 포함되어 있습니다:\\n\\n\`\`\`diff\\n$PROMPT\\n\`\`\`"
-        }
-      ]
-    }
-  ]
-}
-EOF
-)
+          JSON_PAYLOAD="{\"contents\":[{\"parts\":[{\"text\":\"다음은 최근 커밋에서 변경된 코드입니다. 협업과 유지보수 관점, 그리고 선임 개발자의 시각에서 리뷰해 주세요. 개선점, 버그 가능성, 스타일 문제 등을 지적해 주세요.\\n\\n코드는 아래 diff 블록에 포함되어 있습니다:\\n\\n\`\`\`diff\\n$PROMPT\\n\`\`\`\"}]}]}"
+          echo "🔍 [DEBUG] JSON_PAYLOAD 생성됨"
+          echo "$JSON_PAYLOAD"
 
-          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
             -H "Content-Type: application/json" \
             -H "x-goog-api-key: $GEMINI_API_KEY" \
-            -d "$JSON_PAYLOAD")
-          echo "$RESPONSE" > response.json
+            -d "$JSON_PAYLOAD" > response.json
 
       - name: Extract Gemini Review Text
         if: steps.diffcheck.outputs.has_diff == 'true'
         id: extract
         run: |
           TEXT=$(jq -r '.candidates[0].content.parts[0].text' response.json)
-          echo "REVIEW_TEXT<<EOF" >> $GITHUB_OUTPUT
-          echo "$TEXT" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "REVIEW_TEXT<<EOF" >> $GITHUB_ENV
+          echo "$TEXT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Comment on Commit
         if: steps.diffcheck.outputs.has_diff == 'true'
@@ -73,7 +61,7 @@ EOF
           GH_TOKEN: ${{ secrets.PAT_FOR_COMMIT_COMMENT }}
         run: |
           COMMIT_SHA="${{ github.sha }}"
-          COMMENT_BODY=$(echo -e " **Gemini 자동 코드 리뷰 결과 (0729 스타일 가이드 기준)**\n\n${{ steps.extract.outputs.REVIEW_TEXT }}" | jq -Rs .)
+          COMMENT_BODY=$(echo -e "### 🤖 Gemini 자동 코드 리뷰 결과 (0729 스타일 가이드 기반)\n\n${REVIEW_TEXT}" | jq -Rs .)
           curl -s -X POST \
             -H "Authorization: token $GH_TOKEN" \
             -H "Content-Type: application/json" \
