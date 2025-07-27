@@ -34,7 +34,7 @@ jobs:
                 {
                   "parts": [
                     {
-                      "text": "다음 Dart 코드를 리뷰해줘. Flutter 스타일 가이드를 기준으로:\n'"$PROMPT"'"
+                      "text": "코드를 리뷰해줘. 협업과 선임프로그래머 관점으로:\n'"$PROMPT"'"
                     }
                   ]
                 }
