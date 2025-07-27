@@ -3,7 +3,7 @@ name: Gemini Code Review on Push
 on:
   push:
     branches:
-      - master # 또는 원하는 브랜치 지정 (예: 'dev', '**' 등)
+      - master
 
 jobs:
   review:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Read Dart code
+      - name: Read Dart diff
         id: read_code
         run: |
           echo '```diff' > code.txt
@@ -26,9 +26,8 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PROMPT=$(cat code.txt | sed ':a;N;$!ba;s/\n/\\n/g')
-          curl -s -X POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent \
+          curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$GEMINI_API_KEY" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $GEMINI_API_KEY" \
             -d '{
               "contents": [{
                 "parts": [{
