@@ -18,7 +18,7 @@ jobs:
       - name: Get Dart diff
         id: diffcheck
         run: |
-          git diff ${{ github.event.before }} ${{ github.sha }} -- '*.dart' > temp_diff.txt
+          git diff ${{ github.event.before }} ${{ github.sha }} > temp_diff.txt
           if [ -s temp_diff.txt ]; then
             echo "has_diff=true" >> $GITHUB_OUTPUT
             echo '```diff' > code.txt
