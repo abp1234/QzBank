@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/md_parser.dart';
+//import '../utils/md_parser.dart';
 import '../models/question.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});

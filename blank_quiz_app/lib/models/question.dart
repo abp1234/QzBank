@@ -16,6 +16,6 @@ class Question {
       id:map['id'],
       questionText:map['question_text'],
       answer:map['answer'],
-    )
+    );
   }
 }
