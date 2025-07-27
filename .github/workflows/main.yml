@@ -55,7 +55,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_FOR_COMMIT_COMMENT }}
         run: |
           COMMIT_SHA="${{ github.sha }}"
-          COMMENT_BODY=$(echo -e "🤖 **Gemini 자동 코드 리뷰 결과 (Flutter 스타일 가이드 기준)**\n\n${{ steps.extract.outputs.REVIEW_TEXT }}" | jq -Rs .)
+          COMMENT_BODY=$(echo -e " **Gemini 자동 코드 리뷰 결과 (0729 스타일 가이드 기준)**\n\n${{ steps.extract.outputs.REVIEW_TEXT }}" | jq -Rs .)
           curl -s -X POST \
             -H "Authorization: token $GH_TOKEN" \
             -H "Content-Type: application/json" \
