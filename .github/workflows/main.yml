@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 🟢 이전 커밋 참조를 위해 전체 히스토리 필요
 
       - name: Get Dart diff
         run: |
@@ -36,12 +38,7 @@ jobs:
                     }
                   ]
                 }
-              ],
-              "generationConfig": {
-                "thinkingConfig": {
-                  "thinkingBudget": 0
-                }
-              }
+              ]
             }')
           echo "$RESPONSE" > response.json
 
