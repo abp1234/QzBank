@@ -39,7 +39,7 @@ class _QuizScreenState extends State<QuizScreen> {
         .from('questions')
         .select()
         .eq('category', category);
-
+    print('***** Supabase query result: $data');
     setState(() {
       _questions = List<Map<String, dynamic>>.from(data)
         .map((e)=>Question.fromMap(e))
@@ -48,6 +48,9 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   } catch (e) {
     print('질문 로딩 오류: $e');
+    setState(() {
+      _isLoading = false; // <- 실패해도 로딩 해제
+    });
     // 필요 시 _isLoading false 처리 또는 오류 상태 반영
   }
 }
