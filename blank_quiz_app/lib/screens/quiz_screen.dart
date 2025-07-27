@@ -18,17 +18,38 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    loadQuestions();
+    //loadQuestions();
+    loadQuestionsFromSupabase("네트워크");
   }
 
-  Future<void> loadQuestions() async {
-    final qList =
-        await MarkdownParser.parseQuestionsFromMarkdown('assets/summary.md');
+  // Future<void> loadQuestions() async {
+  //   final qList =
+  //       await MarkdownParser.parseQuestionsFromMarkdown('assets/summary.md');
+  //   setState(() {
+  //     _questions = qList;
+  //     _isLoading = false;
+  //   });
+  // }
+
+  Future<void> loadQuestionsFromSupabase(String category) async {
+  try {
+    final data = await Supabase.instance.client
+        .from('questions')
+        .select()
+        .eq('category', category);
+
     setState(() {
-      _questions = qList;
+      _questions = List<Map<String, dynamic>>.from(data)
+        .map((e)=>Question.fromMap(e))
+        .toList();
       _isLoading = false;
     });
+  } catch (e) {
+    print('질문 로딩 오류: $e');
+    // 필요 시 _isLoading false 처리 또는 오류 상태 반영
   }
+}
+
 
   void _submitAnswers() {
     int correct = 0;
@@ -36,6 +57,8 @@ class _QuizScreenState extends State<QuizScreen> {
       if (q.userAnswer != null &&
           q.userAnswer!.trim().toLowerCase() == q.answer.toLowerCase()) {
         correct++;
+      }else{
+        markWrong(q.id);
       }
     }
     setState(() {
@@ -53,7 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('네트워크 빈칸 퀴즈')),
+      appBar: AppBar(title: const Text('빈칸 퀴즈')),
       body: Column(
         children: [
           Expanded(
@@ -126,5 +149,16 @@ class _QuizScreenState extends State<QuizScreen> {
         ],
       ),
     );
+  }
+}
+
+Future<void> markWrong(int id) async{
+  try{
+    await Supabase.instance.client
+        .from('questions')
+        .update({'is_wrong':true})
+        .eq('id',id);
+  }catch(e){
+    print('오답 저장 실패: $e');
   }
 }
