@@ -50,9 +50,9 @@ jobs:
           echo "$TEXT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Comment on Commit (Push)
+      - name: Comment on Commit
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_FOR_COMMIT_COMMENT }}
         run: |
           COMMIT_SHA="${{ github.sha }}"
           COMMENT_BODY=$(echo -e "🤖 **Gemini 자동 코드 리뷰 결과 (Flutter 스타일 가이드 기준)**\n\n${{ steps.extract.outputs.REVIEW_TEXT }}" | jq -Rs .)
@@ -61,4 +61,3 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"body\": $COMMENT_BODY}" \
             "https://api.github.com/repos/${{ github.repository }}/commits/${COMMIT_SHA}/comments"
- 
