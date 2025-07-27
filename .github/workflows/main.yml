@@ -16,8 +16,9 @@ jobs:
       - name: Read Dart code
         id: read_code
         run: |
-          echo '```dart' > code.txt
-          cat lib/main.dart >> code.txt
+          echo '```diff' > code.txt
+          git fetch origin ${{ github.event.before }}
+          git diff ${{ github.event.before }} ${{ github.sha }} -- '*.dart' >> code.txt
           echo '```' >> code.txt
 
       - name: Send to Gemini
