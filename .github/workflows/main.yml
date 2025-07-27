@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # 🟢 이전 커밋 참조를 위해 전체 히스토리 필요
+          fetch-depth: 0
 
       - name: Get Dart diff
         run: |
@@ -50,30 +50,15 @@ jobs:
           echo "$TEXT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Find Related PR
-        id: find_pr
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const commitSha = context.payload.after;
-            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              commit_sha: commitSha
-            });
-            if (prs.data.length === 0) {
-              core.setFailed("No PR found for this push.");
-            } else {
-              const prNumber = prs.data[0].number;
-              core.setOutput("pr_number", prNumber);
-            }
-
-      - name: Comment on Pull Request
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ steps.find_pr.outputs.pr_number }}
-          body: |
-            🤖 **Gemini 자동 코드 리뷰 결과 (Flutter 스타일 가이드 기준)**
-
-            ${{ steps.extract.outputs.REVIEW_TEXT }}
+      - name: Comment on Commit (Push)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMIT_SHA="${{ github.sha }}"
+          COMMENT_BODY=$(echo -e "🤖 **Gemini 자동 코드 리뷰 결과 (Flutter 스타일 가이드 기준)**\n\n${{ steps.extract.outputs.REVIEW_TEXT }}" | jq -Rs .)
+          curl -s -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"body\": $COMMENT_BODY}" \
+            "https://api.github.com/repos/${{ github.repository }}/commits/${COMMIT_SHA}/comments"
+ 
