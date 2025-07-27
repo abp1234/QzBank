@@ -20,7 +20,8 @@ jobs:
           echo '```diff' > code.txt
           git diff ${{ github.event.before }} ${{ github.sha }} -- '*.dart' >> code.txt
           echo '```' >> code.txt
-
+          echo "🔍 [DEBUG] Generated code.txt contents:"
+          cat code.txt
       - name: Send to Gemini 2.5 Flash
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
