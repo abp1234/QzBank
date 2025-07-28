@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/quiz_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'screens/category_selector_screen.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: QuizScreen(),
+      home: const CategorySelectorScreen(),
+      //home: QuizScreen(),
     );
   }
 }

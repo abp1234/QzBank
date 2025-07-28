@@ -4,7 +4,8 @@ import '../models/question.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  final String category;
+  const QuizScreen({super.key, required this.category});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -21,7 +22,7 @@ class _QuizScreenState extends State<QuizScreen> {
   void initState() {
     super.initState();
     //loadQuestions();
-    loadQuestionsFromSupabase("네트워크");
+    loadQuestionsFromSupabase(widget.category);
   }
 
   // Future<void> loadQuestions() async {
