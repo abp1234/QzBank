@@ -1,0 +1,327 @@
+[
+  {
+    "question": "SQL은 '무엇을' 원하는지 기술하는 ___ 언어로, 명령의 실행 순서를 직접 지정하지 않음.",
+    "answer": "선언적",
+    "category": "SQLP"
+  },
+  {
+    "question": "옵티마이저가 ___으로 후보 실행계획 중 최적 경로를 선택한다.",
+    "answer": "비용 기반(CBO)",
+    "category": "SQLP"
+  },
+  {
+    "question": "___는 SQL 내부에 /*+ HINT */ 형식으로 삽입된다.",
+    "answer": "옵티마이저 힌트",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은 SQL을 처음 해석하고 실행계획을 생성하는 과정이다.",
+    "answer": "하드 파싱",
+    "category": "SQLP"
+  },
+  {
+    "question": "___는 SQL 문장의 변동 요소를 변수로 처리함으로써 SQL 캐싱을 유도한다.",
+    "answer": "바인드 변수",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은 연속 블록 읽기를 의미하며 빠르다.",
+    "answer": "시퀀셜",
+    "category": "SQLP"
+  },
+  {
+    "question": "___는 캐시 메모리에서 처리되고, 물리적 I/O는 디스크 접근이다.",
+    "answer": "논리적 I/O",
+    "category": "SQLP"
+  },
+  {
+    "question": "Oracle 등 RDBMS는 디스크에서 데이터를 ___ 단위로 읽는다.",
+    "answer": "블록",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은 전체 테이블을 탐색하는 방식이다.",
+    "answer": "Full Scan",
+    "category": "SQLP"
+  },
+  {
+    "question": "인덱스 구조는 대부분 ___ 기반이며, 루트-브랜치-리프 노드 구조로 계층적이다.",
+    "answer": "B-Tree",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 루트부터 리프 노드까지 따라가는 트리 탐색 방식이다.",
+    "answer": "인덱스 수직적 탐색",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 두 개 이상 컬럼을 포함한 인덱스이다.",
+    "answer": "결합 인덱스",
+    "category": "SQLP"
+  },
+  {
+    "question": "결합 인덱스의 후속 컬럼만 조건절에 있을 경우, ___이(가) 불가능하다.",
+    "answer": "범위 탐색",
+    "category": "SQLP"
+  },
+  {
+    "question": "ORDER BY 절이 인덱스 정렬과 일치하면 ___ 연산을 생략할 수 있다.",
+    "answer": "정렬",
+    "category": "SQLP"
+  },
+  {
+    "question": "컬럼 가공 시 인덱스 정렬은 ___되며, 함수 또는 산술 연산 포함 시 인덱스 사용이 불가하다.",
+    "answer": "무효",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 유일값 검색 시 사용되며, PK 또는 유니크 인덱스에서만 가능하다.",
+    "answer": "Index Unique Scan",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) WHERE 절 조건 없이 인덱스의 모든 값을 정렬된 상태로 순차 접근한다.",
+    "answer": "Index Full Scan",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 결합 인덱스의 선행 컬럼 조건이 없어도 후속 컬럼으로 추정 검색을 수행할 수 있다.",
+    "answer": "Index Skip Scan",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 인덱스 블록을 병렬로 비순차 스캔한다.",
+    "answer": "Index Fast Full Scan",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 인덱스를 통해 찾은 ROWID로 테이블을 무작위 접근하는 방식이다.",
+    "answer": "테이블 랜덤 액세스",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 인덱스 순서와 실제 테이블 행 저장 순서의 일치 정도를 나타낸다.",
+    "answer": "인덱스 클러스터링 팩터",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 구성 목적으로 SELECT 절에 필요한 컬럼을 인덱스에 포함하여 테이블 접근을 생략 유도한다.",
+    "answer": "커버링 인덱스",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 전체 결과를 한 번에 처리하지 않고, 필요한 부분만 나누어 처리함으로써 자원 사용량을 분산한다.",
+    "answer": "부분범위 처리",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 인덱스 스캔을 제한하고, 필터 조건은 테이블 접근 후 필터링한다.",
+    "answer": "액세스 조건",
+    "category": "SQLP"
+  },
+  {
+    "question": "WHERE 절에서 사용하는 함수 결과를 계산하지 않도록 함수 결과를 인덱스에 포함하는 방식은 ___을(를) 구성하는 것이다.",
+    "answer": "함수 기반 인덱스",
+    "category": "SQLP"
+  },
+  {
+    "question": "인덱스 설계의 가장 중요한 두 가지 선택 기준은 ___와 질의 패턴이다.",
+    "answer": "인덱스 선택도(중복도)",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 동일한 컬럼 조합 또는 목적이 중복된 인덱스를 제거하여 자원 낭비를 방지한다.",
+    "answer": "중복 인덱스 제거",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 외부 테이블의 각 행마다 내부 테이블을 탐색하는 반복 루프 구조로 작동한다.",
+    "answer": "NL 조인",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 양쪽 테이블을 정렬 후 병합하여 조인하며, 인덱스 없이도 정렬만 되면 조인이 가능하다.",
+    "answer": "소트 머지 조인",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 정렬을 위한 PGA 메모리 공간을 사용한다.",
+    "answer": "SM 조인",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 한쪽 테이블을 메모리에 해시 테이블로 빌드하고, 다른 테이블과 해시 비교를 수행한다.",
+    "answer": "해시 조인",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 반복 실행 구조로 비효율이 발생하여 JOIN으로 변환할 필요가 있다.",
+    "answer": "상관 서브쿼리",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) SELECT 절 내부 서브쿼리로, 조인으로 변환이 불가하다.",
+    "answer": "스칼라 서브쿼리",
+    "category": "SQLP"
+  },
+  {
+    "question": "SQL 실행 시 발생하는 소트 연산은 ___를(을) 우선 사용하고 부족 시 TEMP 공간을 사용한다.",
+    "answer": "메모리(PGA)",
+    "category": "SQLP"
+  },
+  {
+    "question": "`ORDER BY`, `GROUP BY`, `UNION`, `DISTINCT`, ___ 등에서 자동 소트 연산이 발생한다.",
+    "answer": "분석 함수",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 내부적으로 중복 제거용 소트 수행하지만, 중복 제거가 필요 없으면 `UNION ALL` 사용으로 소트를 생략할 수 있다.",
+    "answer": "UNION",
+    "category": "SQLP"
+  },
+  {
+    "question": "`ORDER BY` 컬럼이 인덱스 정렬 순서와 일치하면 ___ 생략이 가능하다.",
+    "answer": "정렬",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 정렬 후 상위 N건만 추출하는 쿼리로, 인덱스를 활용해 정렬 생략 또는 최소화가 가능하다.",
+    "answer": "Top N 쿼리",
+    "category": "SQLP"
+  },
+  {
+    "question": "___으로 대상 행 축소, SELECT 컬럼 수 최소화 등으로 소트 대상을 줄일 수 있다.",
+    "answer": "WHERE절",
+    "category": "SQLP"
+  },
+  {
+    "question": "DML 1건당 1 Call보다 ___ 시 성능이 우수하다.",
+    "answer": "다건 처리",
+    "category": "SQLP"
+  },
+  {
+    "question": "___을(를) 활용하면 배열 단위로 바인드 처리 시 DML 성능이 대폭 향상된다.",
+    "answer": "Array Processing",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) INSERT/UPDATE를 하나로 통합한 DML로, UPSERT 방식 처리 시 유용하다.",
+    "answer": "MERGE 문",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 버퍼 캐시를 우회하여 데이터를 디스크에서 직접 읽고 쓴다.",
+    "answer": "Direct Path I/O",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 힌트를 통해 Direct Insert를 유도할 수 있다.",
+    "answer": "APPEND",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 힌트 또는 `ALTER SESSION ENABLE PARALLEL DML`을 통해 대량 작업 병렬 처리가 가능하다.",
+    "answer": "`PARALLEL`",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 파티션 단위로 데이터를 분할하여 INSERT/DELETE/UPDATE 대상을 축소한다.",
+    "answer": "테이블 파티션",
+    "category": "SQLP"
+  },
+  {
+    "question": "___을(를) 통해 삭제 대신 파티션 제거로 부하를 최소화할 수 있다.",
+    "answer": "`ALTER TABLE ... DROP PARTITION`",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 락을 통해 행/테이블 수준 잠금을 관리한다.",
+    "answer": "TM(TX)",
+    "category": "SQLP"
+  },
+  {
+    "question": "트랜잭션 동시성 제어를 위해 ___ 타이밍 조정 및 적절한 격리 수준 선택이 필요하다.",
+    "answer": "COMMIT/ROLLBACK",
+    "category": "SQLP"
+  },
+  {
+    "question": "채번 방식에 따라 INSERT 성능에 차이가 존재하는데, ___ 방식이 가장 우수하다.",
+    "answer": "시퀀스 + 캐시",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 조건에 부합하는 비율이며, 카디널리티는 예상 반환 행 수이다.",
+    "answer": "선택도(Selectivity)",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 테이블, 인덱스, 컬럼, 히스토그램 정보를 포함한다.",
+    "answer": "통계정보",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) I/O 비용, CPU 연산, 네트워크 비용 등 다양한 요소를 기반으로 각 실행계획의 비용을 산정한다.",
+    "answer": "비용 계산 원리",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 과거 방식의 옵티마이저로, 규칙 기반으로 경로를 선택한다.",
+    "answer": "RBO(Rule-Based Optimizer)",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) 현재 주류 옵티마이저로, 통계정보 기반으로 비용을 평가한다.",
+    "answer": "CBO(Cost-Based Optimizer)",
+    "category": "SQLP"
+  },
+  {
+    "question": "옵티마이저의 한계 중 주요 원인 중 하나는 ___이다.",
+    "answer": "선택도 예측 실패",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 구문을 사용하여 SQL 문장의 내부 실행 흐름을 분석할 수 있다.",
+    "answer": "`EXPLAIN PLAN`",
+    "category": "SQLP"
+  },
+  {
+    "question": "`EXPLAIN PLAN`은 실행 전 계획만을 보여주므로 실제 ___과 다를 수 있다.",
+    "answer": "실행 비용",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) SQLPlus에서 제공하는 기능이다.",
+    "answer": "AutoTrace",
+    "category": "SQLP"
+  },
+  {
+    "question": "`AUTOTRACE TRACEONLY` 옵션으로 통계만, ___으로 I/O, CPU 사용량을 확인할 수 있다.",
+    "answer": "`STATISTICS`",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) SQL 수행 과정의 모든 단계를 상세하게 기록하는 저수준 추적 도구이다.",
+    "answer": "SQL 트레이스",
+    "category": "SQLP"
+  },
+  {
+    "question": "___을(를) 활용하면 실제 실행된 SQL의 실행계획도 출력 가능하다.",
+    "answer": "`DISPLAY_CURSOR`",
+    "category": "SQLP"
+  },
+  {
+    "question": "___ 옵션으로 실행 통계까지 함께 출력 가능하다.",
+    "answer": "`ALLSTATS LAST`",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) Oracle Enterprise Edition에서 지원하는 기능이다.",
+    "answer": "실시간 SQL 모니터링",
+    "category": "SQLP"
+  },
+  {
+    "question": "___은(는) Shared Pool에 존재하는 SQL의 실행 계획, 실행 횟수, 평균 소요 시간, I/O 등 다양한 정보를 제공한다.",
+    "answer": "V$SQL",
+    "category": "SQLP"
+  }
+]
