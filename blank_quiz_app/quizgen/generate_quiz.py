@@ -24,7 +24,7 @@ def call_gemini_for_questions(text: str) -> List[dict]:
 {{
   "question": "___은 FTP 보안 강화를 위해 사용하는 프로토콜 중 하나이다.",
   "answer": "FTPS",
-  "category": "네트워크"
+  "category": "CSAP"
 }}
 
 다음 원문:

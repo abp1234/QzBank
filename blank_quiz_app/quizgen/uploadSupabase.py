@@ -42,4 +42,4 @@ def upload_to_supabase(json_path: str):
     print(f"✅ 업로드 완료: 성공 {success}개, 실패 {fail}개")
 
 if __name__ == "__main__":
-    upload_to_supabase("quiz.json")
+    upload_to_supabase("CSAP_quiz.json")
